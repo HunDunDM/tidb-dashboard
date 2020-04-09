@@ -67,7 +67,7 @@ func TiDBLabelStrategy(lc fx.Lifecycle, wg *sync.WaitGroup, cfg *config.Config, 
 }
 
 func (s *tidbLabelStrategy) Background(ctx context.Context) {
-	ticker := time.NewTicker(time.Minute)
+	ticker := time.NewTicker(time.Second * 15)
 	defer ticker.Stop()
 	for {
 		select {

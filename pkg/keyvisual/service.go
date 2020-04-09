@@ -53,7 +53,7 @@ var (
 
 	defaultStatConfig = storage.StatConfig{
 		LayersConfig: []storage.LayerConfig{
-			{Len: 60, Ratio: 2 / 1},                     // step 1 minutes, total 60, 1 hours (sum: 1 hours)
+			{Len: 10, Ratio: 2 / 1},                     // step 1 minutes, total 60, 1 hours (sum: 1 hours)
 			{Len: 60 / 2 * 7, Ratio: 6 / 2},             // step 2 minutes, total 210, 7 hours (sum: 8 hours)
 			{Len: 60 / 6 * 16, Ratio: 30 / 6},           // step 6 minutes, total 160, 16 hours (sum: 1 days)
 			{Len: 60 / 30 * 24 * 6, Ratio: 4 * 60 / 30}, // step 30 minutes, total 288, 6 days (sum: 1 weeks)

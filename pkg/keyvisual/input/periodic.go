@@ -39,7 +39,7 @@ func (input *periodicInput) GetStartTime() time.Time {
 }
 
 func (input *periodicInput) Background(ctx context.Context, stat *storage.Stat) {
-	ticker := time.NewTicker(time.Second * 5)
+	ticker := time.NewTicker(time.Second * 15)
 	defer ticker.Stop()
 	for {
 		select {

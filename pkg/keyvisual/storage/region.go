@@ -27,7 +27,7 @@ const (
 	// preRatioTarget = 512
 	preTarget = 3072
 
-	dirtyWrittenBytes = 1 << 32
+	dirtyWrittenBytes = 1 << 29
 )
 
 // CreateStorageAxis converts the RegionsInfo to a StorageAxis.

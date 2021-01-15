@@ -28,6 +28,7 @@ import AppDiagnose from '@lib/apps/Diagnose/index.meta'
 import AppSearchLogs from '@lib/apps/SearchLogs/index.meta'
 import AppInstanceProfiling from '@lib/apps/InstanceProfiling/index.meta'
 import AppQueryEditor from '@lib/apps/QueryEditor/index.meta'
+import AppQueryViz from '@lib/apps/QueryViz/index.meta'
 import AppConfiguration from '@lib/apps/Configuration/index.meta'
 
 function removeSpinner() {
@@ -108,6 +109,7 @@ async function main() {
     .register(AppSearchLogs)
     .register(AppInstanceProfiling)
     .register(AppQueryEditor)
+    .register(AppQueryViz)
     .register(AppConfiguration)
 
   if (routing.isLocationMatch('/')) {

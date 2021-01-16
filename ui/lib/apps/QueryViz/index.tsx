@@ -18,7 +18,7 @@ import styles from './index.module.less'
 import client, { QueryeditorRunResponse } from '@lib/client'
 import ReactAce from 'react-ace/lib/ace'
 import { getValueFormat } from '@baurine/grafana-value-formats'
-import { generateSQL, DEFAULT_CATEGORY } from './generate'
+import { generateSQL, DEFAULT_CATEGORY, DEFAULT_ECHARTS } from './generate'
 
 const MAX_DISPLAY_ROWS = 10000
 
@@ -29,6 +29,7 @@ const NEED_SELECT_TABLE_PATTERN = new Set([
 
 function App() {
   const [results, setResults] = useState<QueryeditorRunResponse | undefined>()
+  const [echartsType, setEchartsType] = useState<string | undefined>()
   const [defaultCategory, setDefaultCategory] = useState<string | undefined>()
   const [isRunning, setRunning] = useState(false)
   const [isHiddenEditor, setHiddenEditor] = useState(true)
@@ -68,6 +69,12 @@ function App() {
         max_rows: MAX_DISPLAY_ROWS,
         statements: statements,
       })
+
+      setEchartsType(
+        fieldsValue.pattern !== 'custom'
+          ? DEFAULT_ECHARTS[fieldsValue.pattern]
+          : fieldsValue.echarts
+      )
       setDefaultCategory(DEFAULT_CATEGORY[fieldsValue.pattern])
       setResults(resp.data)
     } finally {
@@ -86,7 +93,7 @@ function App() {
             initialValues={{
               pattern: 'table_region_peer_count',
               table_name: undefined,
-              echarts: undefined,
+              echarts: 'category_stack',
             }}
             onValuesChange={(_, allValues) =>
               setHiddenEditor(allValues?.pattern !== 'custom')
@@ -125,6 +132,30 @@ function App() {
                         {tables.map((name) => (
                           <Select.Option key={name} value={name}>
                             {name}
+                          </Select.Option>
+                        ))}
+                      </Select>
+                    </Form.Item>
+                  )
+                )
+              }}
+            </Form.Item>
+            <Form.Item
+              noStyle
+              shouldUpdate={(prev, cur) => prev.pattern !== cur.pattern}
+            >
+              {({ getFieldValue }) => {
+                return (
+                  getFieldValue('pattern') === 'custom' && (
+                    <Form.Item
+                      name="echarts"
+                      label={t('queryviz.echarts.select')}
+                      rules={[{ required: true }]}
+                    >
+                      <Select style={{ width: 300 }}>
+                        {['category_stack'].map((name) => (
+                          <Select.Option key={name} value={name}>
+                            {t('queryviz.echarts.' + name)}
                           </Select.Option>
                         ))}
                       </Select>

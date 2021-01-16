@@ -8,3 +8,6 @@ queryviz:
     table_region_peer_count: 查看表的 Region Peer 分布
     table_region_leader_count: 查看表的 Region Leader 分布
     custom: 自定义
+  echarts:
+    select: 选择图表
+    category_stack: 堆叠柱状图

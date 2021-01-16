@@ -27,3 +27,8 @@ export const DEFAULT_CATEGORY = {
   table_region_peer_count: 'row',
   table_region_leader_count: 'row',
 }
+
+export const DEFAULT_ECHARTS = {
+  table_region_peer_count: 'category_stack',
+  table_region_leader_count: 'category_stack',
+}

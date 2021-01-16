@@ -43,6 +43,7 @@ function ResultTable({ results }: IResultTableProps) {
     if (results.error_msg) {
       return [{ error: results.error_msg }]
     } else {
+      console.log(results.rows ?? [])
       return results.rows ?? []
     }
   }, [results])

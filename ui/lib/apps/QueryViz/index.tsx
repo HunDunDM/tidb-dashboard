@@ -11,7 +11,7 @@ import {
 } from '@ant-design/icons'
 
 import Editor from './Editor'
-import ResultTable from './ResultTable'
+import ResultCategoryStack from './ResultCategoryStack'
 
 import styles from './index.module.less'
 import client, { QueryeditorRunResponse } from '@lib/client'
@@ -88,15 +88,15 @@ function App() {
           className={cx(styles.contentContainer, {
             [styles.isCollapsed]: isResultsEmpty,
           })}
-          sizes={isResultsEmpty ? [100, 0] : [50, 50]}
+          sizes={isResultsEmpty ? [100, 0] : [20, 80]}
           minSize={isResultsEmpty ? 0 : 100}
           expandToMin={false}
         >
           <Card noMarginTop noMarginBottom={!isResultsEmpty} flexGrow>
             <Editor focus ref={editor} />
           </Card>
-          <div className={styles.resultTableContainer}>
-            {!isResultsEmpty && <ResultTable results={results} />}
+          <div className={styles.resultCategoryStackContainer}>
+            {!isResultsEmpty && <ResultCategoryStack results={results} />}
           </div>
         </Split>
       </div>

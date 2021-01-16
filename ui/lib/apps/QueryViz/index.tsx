@@ -12,7 +12,8 @@ import {
 } from '@ant-design/icons'
 
 import Editor from './Editor'
-import ResultCategoryStack, { HEIGHT } from './ResultCategoryStack'
+import ResultCategoryStack from './ResultCategoryStack'
+import ResultBar from './ResultBar'
 
 import styles from './index.module.less'
 import client, { QueryeditorRunResponse } from '@lib/client'
@@ -21,6 +22,8 @@ import { getValueFormat } from '@baurine/grafana-value-formats'
 import { generateSQL, DEFAULT_CATEGORY, DEFAULT_ECHARTS } from './generate'
 
 const MAX_DISPLAY_ROWS = 10000
+
+const HEIGHT = 480
 
 const NEED_SELECT_TABLE_PATTERN = new Set([
   'table_region_peer_count',
@@ -82,6 +85,25 @@ function App() {
     }
     editor.current?.editor.focus()
   }, [])
+
+  let Result
+  switch (echartsType) {
+    case 'category_stack':
+      Result = (
+        <ResultCategoryStack
+          results={results}
+          defaultCategory={defaultCategory}
+          height={HEIGHT}
+        />
+      )
+      break
+    case 'bar':
+      Result = <ResultBar results={results} height={HEIGHT} />
+      break
+    default:
+      Result = null
+  }
+  Result = !isResultsEmpty && Result
 
   return (
     <Root>
@@ -153,7 +175,7 @@ function App() {
                       rules={[{ required: true }]}
                     >
                       <Select style={{ width: 300 }}>
-                        {['category_stack'].map((name) => (
+                        {['bar', 'category_stack'].map((name) => (
                           <Select.Option key={name} value={name}>
                             {t('queryviz.echarts.' + name)}
                           </Select.Option>
@@ -206,12 +228,7 @@ function App() {
               className={styles.resultCategoryStackContainer}
               style={{ height: HEIGHT }}
             >
-              {!isResultsEmpty && (
-                <ResultCategoryStack
-                  results={results}
-                  defaultCategory={defaultCategory}
-                />
-              )}
+              {Result}
             </div>
           </div>
         ) : (
@@ -228,14 +245,7 @@ function App() {
             <Card noMarginTop noMarginBottom={!isResultsEmpty} flexGrow>
               <Editor focus ref={editor} />
             </Card>
-            <div className={styles.resultCategoryStackContainer}>
-              {!isResultsEmpty && (
-                <ResultCategoryStack
-                  results={results}
-                  defaultCategory={defaultCategory}
-                />
-              )}
-            </div>
+            <div className={styles.resultCategoryStackContainer}>{Result}</div>
           </Split>
         )}
       </div>

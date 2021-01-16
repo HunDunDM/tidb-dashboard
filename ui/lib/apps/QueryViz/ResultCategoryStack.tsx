@@ -10,19 +10,19 @@ import echarts from 'echarts/lib/echarts'
 
 import { QueryeditorRunResponse } from '@lib/client'
 
-import styles from './ResultCategoryStack.module.less'
+import styles from './Result.module.less'
 import { ScrollablePane } from 'office-ui-fabric-react/lib/ScrollablePane'
 
 interface IResultCategoryStackProps {
   results?: QueryeditorRunResponse
   defaultCategory?: string
+  height: number
 }
-
-export const HEIGHT = 480
 
 function ResultCategoryStack({
   results,
   defaultCategory = 'NULL',
+  height,
 }: IResultCategoryStackProps) {
   const opt = useMemo(() => {
     if (!results) {
@@ -35,9 +35,9 @@ function ResultCategoryStack({
     }
     const stack = columnNames[2]
 
+    const data = results.rows ?? []
     let keys: Array<string> = []
     let categories: Array<string> = []
-    const data = results.rows ?? []
 
     data.forEach((row) => {
       keys.push(String(row[0]))
@@ -94,12 +94,12 @@ function ResultCategoryStack({
   }, [results, defaultCategory])
 
   return (
-    <div className={styles.resultCategoryStack}>
+    <div className={styles.result}>
       <ScrollablePane>
         <ReactEchartsCore
           echarts={echarts}
           lazyUpdate={true}
-          style={{ height: HEIGHT }}
+          style={{ height }}
           option={opt}
           theme={'light'}
         />

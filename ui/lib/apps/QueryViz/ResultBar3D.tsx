@@ -37,18 +37,22 @@ function ResultBar3D({
     const data = results.rows ?? []
     let keys: Array<string> = []
     let categories: Array<string> = []
+    let maxValue = 0
 
-    data.forEach((row) => {
+    const source = data.map((row) => {
       keys.push(String(row[0]))
       categories.push(String(row[1] ?? defaultCategory))
+      maxValue = Math.max(maxValue, Number(row[2]))
+      return {
+        value: [
+          String(row[0]),
+          String(row[1] ?? defaultCategory),
+          Number(row[2]),
+        ],
+      }
     })
-
     keys = Array.from(new Set(keys)).sort()
     categories = Array.from(new Set(categories)).sort()
-
-    const source = data.map((row) => ({
-      value: [row[0], row[1] ?? defaultCategory, row[2]],
-    }))
 
     return {
       title: {
@@ -61,7 +65,7 @@ function ResultBar3D({
       },
       tooltip: {},
       visualMap: {
-        max: 20,
+        max: maxValue,
         inRange: {
           color: [
             '#313695',
@@ -115,7 +119,7 @@ function ResultBar3D({
             },
           },
           itemStyle: {
-            opacity: 0.4,
+            opacity: 0.7,
           },
           emphasis: {
             label: {

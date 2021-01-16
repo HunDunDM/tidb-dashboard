@@ -99,7 +99,7 @@ function ResultPie({
         },
       ],
     }
-  }, [results, defaultCategory, height])
+  }, [results, defaultCategory])
 
   return (
     <div className={styles.result}>

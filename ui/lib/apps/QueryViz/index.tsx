@@ -30,6 +30,8 @@ const HEIGHT = 480
 const NEED_SELECT_TABLE_PATTERN = new Set([
   'table_region_peer_count',
   'table_region_leader_count',
+  'table_region_peer_balance',
+  'table_region_leader_balance',
 ])
 
 function App() {
@@ -47,7 +49,7 @@ function App() {
       const resp = await client.getInstance().queryEditorRun({
         max_rows: MAX_DISPLAY_ROWS,
         statements:
-          "select table_schema, table_name from information_schema.tables where table_type='BASE TABLE';",
+          "SELECT TABLE_SCHEMA, TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE='BASE TABLE';",
       })
       const data = resp.data.rows ?? []
       const tables = data
@@ -138,6 +140,8 @@ function App() {
                 {[
                   'table_region_peer_count',
                   'table_region_leader_count',
+                  'table_region_peer_balance',
+                  'table_region_leader_balance',
                   'custom',
                 ].map((value) => (
                   <Select.Option value={value} key={value}>

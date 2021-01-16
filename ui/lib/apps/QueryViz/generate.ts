@@ -8,15 +8,27 @@ export function generateSQL({ pattern = 'custom', table_name = '' }): string {
   switch (pattern) {
     case 'table_region_peer_count':
       return (
-        'select p.store_id, s.index_name, count(s.region_id) cnt from INFORMATION_SCHEMA.TIKV_REGION_STATUS s join INFORMATION_SCHEMA.tikv_region_peers p on s.region_id = p.region_id where ' +
+        'SELECT p.STORE_ID, s.INDEX_NAME, COUNT(s.REGION_ID) PEER_COUNT FROM INFORMATION_SCHEMA.TIKV_REGION_STATUS s JOIN INFORMATION_SCHEMA.TIKV_REGION_PEERS p on s.REGION_ID = p.REGION_ID WHERE ' +
         where +
-        ' group by index_name, p.store_id order by index_name,cnt desc;'
+        ' GROUP BY INDEX_NAME, p.STORE_ID ORDER BY INDEX_NAME, PEER_COUNT DESC;'
       )
     case 'table_region_leader_count':
       return (
-        'select p.store_id, s.index_name, count(s.region_id) cnt from INFORMATION_SCHEMA.TIKV_REGION_STATUS s join INFORMATION_SCHEMA.tikv_region_peers p on s.region_id = p.region_id where ' +
+        'SELECT p.STORE_ID, s.INDEX_NAME, COUNT(s.REGION_ID) LEADER_COUNT FROM INFORMATION_SCHEMA.TIKV_REGION_STATUS s JOIN INFORMATION_SCHEMA.TIKV_REGION_PEERS p ON s.REGION_ID = p.REGION_ID WHERE ' +
         where +
-        ' and p.is_leader = 1 group by index_name, p.store_id order by index_name,cnt desc;'
+        ' AND p.IS_LEADER = 1 GROUP BY INDEX_NAME, p.STORE_ID ORDER BY INDEX_NAME, LEADER_COUNT DESC;'
+      )
+    case 'table_region_peer_balance':
+      return (
+        'SELECT p.STORE_ID, COUNT(s.REGION_ID) PEER_COUNT FROM INFORMATION_SCHEMA.TIKV_REGION_STATUS s JOIN INFORMATION_SCHEMA.TIKV_REGION_PEERS p on s.REGION_ID = p.REGION_ID WHERE ' +
+        where +
+        ' GROUP BY p.STORE_ID ORDER BY PEER_COUNT DESC;'
+      )
+    case 'table_region_leader_balance':
+      return (
+        'SELECT p.STORE_ID, COUNT(s.REGION_ID) LEADER_COUNT FROM INFORMATION_SCHEMA.TIKV_REGION_STATUS s JOIN INFORMATION_SCHEMA.TIKV_REGION_PEERS p ON s.REGION_ID = p.REGION_ID WHERE ' +
+        where +
+        ' AND p.IS_LEADER = 1 GROUP BY p.STORE_ID ORDER BY LEADER_COUNT DESC;'
       )
     default:
       return ''
@@ -31,4 +43,6 @@ export const DEFAULT_CATEGORY = {
 export const DEFAULT_ECHARTS = {
   table_region_peer_count: 'category_stack',
   table_region_leader_count: 'category_stack',
+  table_region_peer_balance: 'pie',
+  table_region_leader_balance: 'pie',
 }

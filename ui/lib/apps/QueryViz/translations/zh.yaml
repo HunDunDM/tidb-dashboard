@@ -5,6 +5,8 @@ queryviz:
     select: 选择表
   pattern:
     select: 选择模式
+    table_region_peer_balance: 查看表的 Region Peer 均衡度
+    table_region_leader_balance: 查看表的 Region Leader 均衡度
     table_region_peer_count: 查看表的 Region Peer 分布
     table_region_leader_count: 查看表的 Region Leader 分布
     custom: 自定义 SQL

@@ -61,8 +61,8 @@ function ResultPie({
       },
       visualMap: {
         show: false,
-        min: source[0].value / 8,
-        max: source[source.length - 1].value * 2,
+        min: source[0].value / 100,
+        max: source[source.length - 1].value * 1.618,
         inRange: {
           colorLightness: [0, 1],
         },

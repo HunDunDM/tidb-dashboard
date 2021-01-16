@@ -2,13 +2,17 @@ queryviz:
   nav_title: 查询可视化
   run: 运行
   table:
-    select: 选择表
+    select: 表信息
+    placeholder: 所有表
+    selected: '{{ n }} 张表'
+    columnTitle: 数据库.表名
   pattern:
     select: 选择模式
     table_region_peer_balance: Region Peer 均衡度
     table_region_leader_balance: Region Leader 均衡度
     table_region_peer_count: Region Peer 分布
     table_region_leader_count: Region Leader 分布
+    table_slow_log_count: 慢日志的时间分布
     custom: 自定义 SQL
   echarts:
     select: 选择图表

@@ -1,7 +1,13 @@
 import React, { useState, useCallback, useRef, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import cx from 'classnames'
-import { Root, Card } from '@lib/components'
+import {
+  Root,
+  Card,
+  TimeRange,
+  TimeRangeSelector,
+  MultiSelect,
+} from '@lib/components'
 import Split from 'react-split'
 import { Button, Typography, Form, Select } from 'antd'
 import {
@@ -34,6 +40,8 @@ const NEED_SELECT_TABLE_PATTERN = new Set([
   'table_region_peer_balance',
   'table_region_leader_balance',
 ])
+
+const NEED_SELECT_TIME_PATTERN = new Set(['table_slow_log_count'])
 
 const COLUMN_LENGTH = {
   pie: 2,
@@ -91,12 +99,6 @@ function App() {
     try {
       let statements = editor.current?.editor.getValue()
       if (fieldsValue.pattern !== 'custom') {
-        if (
-          NEED_SELECT_TABLE_PATTERN.has(fieldsValue.pattern) &&
-          !fieldsValue.table_name
-        ) {
-          return
-        }
         statements = generateSQL(fieldsValue)
         if (!statements) {
           return
@@ -183,7 +185,11 @@ function App() {
             layout="inline"
             initialValues={{
               pattern: 'table_region_peer_count',
-              table_name: undefined,
+              table_names: [],
+              time_range: {
+                type: 'recent',
+                value: 86400, // unit: seconds
+              },
               echarts: 'category_stack',
             }}
             onValuesChange={(_, allValues) =>
@@ -216,18 +222,14 @@ function App() {
               {({ getFieldValue }) => {
                 return (
                   NEED_SELECT_TABLE_PATTERN.has(getFieldValue('pattern')) && (
-                    <Form.Item
-                      name="table_name"
-                      label={t('queryviz.table.select')}
-                      rules={[{ required: true }]}
-                    >
-                      <Select style={{ width: 240 }}>
-                        {tables.map((name) => (
-                          <Select.Option key={name} value={name}>
-                            {name}
-                          </Select.Option>
-                        ))}
-                      </Select>
+                    <Form.Item name="table_names">
+                      <MultiSelect.Plain
+                        placeholder={t('queryviz.table.placeholder')}
+                        selectedValueTransKey="queryviz.table.selected"
+                        columnTitle={t('queryviz.table.columnTitle')}
+                        style={{ width: 150 }}
+                        items={tables}
+                      />
                     </Form.Item>
                   )
                 )

@@ -186,7 +186,7 @@ function App() {
               label={t('queryviz.pattern.select')}
               rules={[{ required: true }]}
             >
-              <Select style={{ width: 240 }}>
+              <Select style={{ width: 270 }}>
                 {[
                   'table_region_peer_count',
                   'table_region_leader_count',
@@ -212,7 +212,7 @@ function App() {
                       label={t('queryviz.table.select')}
                       rules={[{ required: true }]}
                     >
-                      <Select style={{ width: 300 }}>
+                      <Select style={{ width: 240 }}>
                         {tables.map((name) => (
                           <Select.Option key={name} value={name}>
                             {name}
@@ -236,7 +236,7 @@ function App() {
                       label={t('queryviz.echarts.select')}
                       rules={[{ required: true }]}
                     >
-                      <Select style={{ width: 300 }}>
+                      <Select style={{ width: 240 }}>
                         {[
                           'pie',
                           'bar',

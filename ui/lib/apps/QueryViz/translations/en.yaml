@@ -1,2 +1,19 @@
 queryviz:
   nav_title: Query Visualizer
+  run: Run
+  table:
+    select: Select Table
+  pattern:
+    select: Select Pattern
+    table_region_peer_balance: The balance of Region peer
+    table_region_leader_balance: The balance of Region leader
+    table_region_peer_count: The distribution of Region peer
+    table_region_leader_count: The distribution of Region leader
+    custom: Custom SQL
+  echarts:
+    select: Select Chart
+    pie: Pie Chart
+    area_line: Line Chart
+    bar: Bar Chart
+    category_stack: Stacked Bar Chart
+    bar3d: 3D Bar Chart

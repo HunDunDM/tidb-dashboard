@@ -15,6 +15,7 @@ import Editor from './Editor'
 import ResultCategoryStack from './ResultCategoryStack'
 import ResultBar from './ResultBar'
 import ResultAreaLine from './ResultAreaLine'
+import ResultPie from './ResultPie'
 
 import styles from './index.module.less'
 import client, { QueryeditorRunResponse } from '@lib/client'
@@ -104,6 +105,9 @@ function App() {
     case 'area_line':
       Result = <ResultAreaLine results={results} height={HEIGHT} />
       break
+    case 'pie':
+      Result = <ResultPie results={results} height={HEIGHT} />
+      break
     default:
       Result = null
   }
@@ -179,11 +183,13 @@ function App() {
                       rules={[{ required: true }]}
                     >
                       <Select style={{ width: 300 }}>
-                        {['bar', 'area_line', 'category_stack'].map((name) => (
-                          <Select.Option key={name} value={name}>
-                            {t('queryviz.echarts.' + name)}
-                          </Select.Option>
-                        ))}
+                        {['pie', 'bar', 'area_line', 'category_stack'].map(
+                          (name) => (
+                            <Select.Option key={name} value={name}>
+                              {t('queryviz.echarts.' + name)}
+                            </Select.Option>
+                          )
+                        )}
                       </Select>
                     </Form.Item>
                   )

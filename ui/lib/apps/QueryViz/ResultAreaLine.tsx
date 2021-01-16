@@ -44,6 +44,9 @@ function ResultAreaLine({ results, height }: IResultAreaLineProps) {
           color: '#333',
         },
       },
+      tooltip: {
+        trigger: 'item',
+      },
       xAxis: {
         type: 'category',
         data: keys,
@@ -63,7 +66,7 @@ function ResultAreaLine({ results, height }: IResultAreaLineProps) {
 
   return (
     <div className={styles.result}>
-      <ScrollablePane>
+      <ScrollablePane style={{ height }}>
         <ReactEchartsCore
           echarts={echarts}
           lazyUpdate={true}

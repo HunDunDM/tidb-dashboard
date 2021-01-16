@@ -44,6 +44,9 @@ function ResultBar({ results, height }: IResultBarProps) {
           color: '#333',
         },
       },
+      tooltip: {
+        trigger: 'item',
+      },
       xAxis: {
         type: 'value',
       },
@@ -62,7 +65,7 @@ function ResultBar({ results, height }: IResultBarProps) {
 
   return (
     <div className={styles.result}>
-      <ScrollablePane>
+      <ScrollablePane style={{ height }}>
         <ReactEchartsCore
           echarts={echarts}
           lazyUpdate={true}

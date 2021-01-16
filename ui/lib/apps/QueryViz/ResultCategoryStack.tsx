@@ -101,7 +101,7 @@ function ResultCategoryStack({
 
   return (
     <div className={styles.result}>
-      <ScrollablePane>
+      <ScrollablePane style={{ height }}>
         <ReactEchartsCore
           echarts={echarts}
           lazyUpdate={true}

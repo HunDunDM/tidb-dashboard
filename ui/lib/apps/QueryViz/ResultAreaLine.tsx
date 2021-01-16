@@ -38,11 +38,11 @@ function ResultAreaLine({ results, height }: IResultAreaLineProps) {
 
     return {
       xAxis: {
-        type: 'value',
-      },
-      yAxis: {
         type: 'category',
         data: keys,
+      },
+      yAxis: {
+        type: 'value',
       },
       series: [
         {

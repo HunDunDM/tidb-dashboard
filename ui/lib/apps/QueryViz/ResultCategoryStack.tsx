@@ -15,14 +15,14 @@ import { ScrollablePane } from 'office-ui-fabric-react/lib/ScrollablePane'
 
 interface IResultCategoryStackProps {
   results?: QueryeditorRunResponse
-  defaultCategory?: String
+  defaultCategory?: string
 }
 
-const HEIGHT = 500
+export const HEIGHT = 480
 
 function ResultCategoryStack({
   results,
-  defaultCategory,
+  defaultCategory = 'NULL',
 }: IResultCategoryStackProps) {
   const opt = useMemo(() => {
     if (!results) {
@@ -35,10 +35,8 @@ function ResultCategoryStack({
     }
     const stack = columnNames[2]
 
-    defaultCategory = defaultCategory ?? 'default'
-    let keys: Array<String> = []
-    let categories: Array<String> = []
-
+    let keys: Array<string> = []
+    let categories: Array<string> = []
     const data = results.rows ?? []
 
     data.forEach((row) => {
@@ -93,7 +91,7 @@ function ResultCategoryStack({
       },
       series: series,
     }
-  }, [results])
+  }, [results, defaultCategory])
 
   return (
     <div className={styles.resultCategoryStack}>

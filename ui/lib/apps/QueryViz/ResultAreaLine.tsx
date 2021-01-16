@@ -28,10 +28,6 @@ function ResultAreaLine({ results, height }: IResultAreaLineProps) {
     }
 
     const columnNames = results.column_names ?? []
-    if (columnNames.length !== 2) {
-      return null
-    }
-
     const data = results.rows ?? []
     const keys = data.map((row) => String(row[0])).sort()
     const values: Array<number> = []

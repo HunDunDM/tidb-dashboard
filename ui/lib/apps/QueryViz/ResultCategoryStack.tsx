@@ -33,11 +33,7 @@ function ResultCategoryStack({
     }
 
     const columnNames = results.column_names ?? []
-    if (columnNames.length !== 3) {
-      return null
-    }
     const stack = columnNames[2]
-
     const data = results.rows ?? []
     let keys: Array<string> = []
     let categories: Array<string> = []

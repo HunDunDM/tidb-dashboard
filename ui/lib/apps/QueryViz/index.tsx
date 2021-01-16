@@ -34,6 +34,13 @@ const NEED_SELECT_TABLE_PATTERN = new Set([
   'table_region_leader_balance',
 ])
 
+const COLUMN_LENGTH = {
+  pie: 2,
+  area_line: 2,
+  bar: 2,
+  category_stack: 3,
+}
+
 function App() {
   const [results, setResults] = useState<QueryeditorRunResponse | undefined>()
   const [echartsType, setEchartsType] = useState<string | undefined>()
@@ -60,9 +67,23 @@ function App() {
     getTables().then()
   }, [])
 
+  if (
+    !!results &&
+    !results.error_msg &&
+    !!results.column_names?.length &&
+    !!results.rows?.length &&
+    !!echartsType
+  ) {
+    if (results.column_names.length !== COLUMN_LENGTH[echartsType]) {
+      results.error_msg = 'The number of data columns cannot be matched.'
+    }
+  }
+
   const isResultsEmpty =
     !results ||
-    (!results.error_msg && (!results.column_names?.length || !results.rows))
+    !!results.error_msg ||
+    !results.column_names?.length ||
+    !results.rows
 
   const handleRun = useCallback(async (fieldsValue) => {
     try {

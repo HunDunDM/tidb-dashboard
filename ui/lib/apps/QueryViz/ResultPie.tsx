@@ -95,7 +95,7 @@ function ResultPie({ results, height }: IResultPieProps) {
         },
       ],
     }
-  }, [results])
+  }, [results, height])
 
   return (
     <div className={styles.result}>

@@ -16,6 +16,7 @@ import ResultCategoryStack from './ResultCategoryStack'
 import ResultBar from './ResultBar'
 import ResultAreaLine from './ResultAreaLine'
 import ResultPie from './ResultPie'
+import ResultBar3D from './ResultBar3D'
 
 import styles from './index.module.less'
 import client, { QueryeditorRunResponse } from '@lib/client'
@@ -39,6 +40,7 @@ const COLUMN_LENGTH = {
   area_line: 2,
   bar: 2,
   category_stack: 3,
+  bar3d: 3,
 }
 
 function App() {
@@ -123,13 +125,40 @@ function App() {
       )
       break
     case 'bar':
-      Result = <ResultBar results={results} height={HEIGHT} />
+      Result = (
+        <ResultBar
+          results={results}
+          defaultCategory={defaultCategory}
+          height={HEIGHT}
+        />
+      )
       break
     case 'area_line':
-      Result = <ResultAreaLine results={results} height={HEIGHT} />
+      Result = (
+        <ResultAreaLine
+          results={results}
+          defaultCategory={defaultCategory}
+          height={HEIGHT}
+        />
+      )
       break
     case 'pie':
-      Result = <ResultPie results={results} height={HEIGHT} />
+      Result = (
+        <ResultPie
+          results={results}
+          defaultCategory={defaultCategory}
+          height={HEIGHT}
+        />
+      )
+      break
+    case 'bar3d':
+      Result = (
+        <ResultBar3D
+          results={results}
+          defaultCategory={defaultCategory}
+          height={HEIGHT}
+        />
+      )
       break
     default:
       Result = null
@@ -208,13 +237,17 @@ function App() {
                       rules={[{ required: true }]}
                     >
                       <Select style={{ width: 300 }}>
-                        {['pie', 'bar', 'area_line', 'category_stack'].map(
-                          (name) => (
-                            <Select.Option key={name} value={name}>
-                              {t('queryviz.echarts.' + name)}
-                            </Select.Option>
-                          )
-                        )}
+                        {[
+                          'pie',
+                          'bar',
+                          'area_line',
+                          'category_stack',
+                          'bar3d',
+                        ].map((name) => (
+                          <Select.Option key={name} value={name}>
+                            {t('queryviz.echarts.' + name)}
+                          </Select.Option>
+                        ))}
                       </Select>
                     </Form.Item>
                   )

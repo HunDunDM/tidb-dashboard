@@ -16,3 +16,4 @@ queryviz:
     area_line: 折线图
     bar: 柱状图
     category_stack: 堆叠柱状图
+    bar3d: 三维柱状图

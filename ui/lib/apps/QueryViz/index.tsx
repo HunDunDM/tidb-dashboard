@@ -71,6 +71,9 @@ function App() {
               table_name: undefined,
               echarts: undefined,
             }}
+            onValuesChange={(_, allValues) =>
+              setHiddenEditor(allValues?.pattern !== 'custom')
+            }
           >
             <Form.Item
               name="pattern"

@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useRef } from 'react'
+import React, { useState, useCallback, useRef, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import cx from 'classnames'
 import { Root, Card } from '@lib/components'
@@ -20,7 +20,7 @@ import ReactAce from 'react-ace/lib/ace'
 import { getValueFormat } from '@baurine/grafana-value-formats'
 import { generateSQL, DEFAULT_CATEGORY } from './generate'
 
-const MAX_DISPLAY_ROWS = 1000
+const MAX_DISPLAY_ROWS = 10000
 
 const NEED_SELECT_TABLE_PATTERN = new Set([
   'table_region_peer_count',
@@ -32,8 +32,25 @@ function App() {
   const [defaultCategory, setDefaultCategory] = useState<string | undefined>()
   const [isRunning, setRunning] = useState(false)
   const [isHiddenEditor, setHiddenEditor] = useState(true)
+  const [tables, setTables] = useState<string[]>([])
   const editor = useRef<ReactAce>(null)
   const { t } = useTranslation()
+
+  useEffect(() => {
+    const getTables = async () => {
+      const resp = await client.getInstance().queryEditorRun({
+        max_rows: MAX_DISPLAY_ROWS,
+        statements:
+          "select table_schema, table_name from information_schema.tables where table_type='BASE TABLE';",
+      })
+      const data = resp.data.rows ?? []
+      const tables = data
+        .filter((row) => String(row[0]) !== 'mysql')
+        .map((row) => String(row[0]) + '.' + String(row[1]))
+      setTables(tables.sort())
+    }
+    getTables().then()
+  }, [])
 
   const isResultsEmpty =
     !results ||
@@ -105,7 +122,11 @@ function App() {
                       rules={[{ required: true }]}
                     >
                       <Select style={{ width: 300 }}>
-                        <Select.Option value="sbtest1">sbtest1</Select.Option>
+                        {tables.map((name) => (
+                          <Select.Option key={name} value={name}>
+                            {name}
+                          </Select.Option>
+                        ))}
                       </Select>
                     </Form.Item>
                   )

@@ -89,12 +89,21 @@ function App() {
 
   const handleRun = useCallback(async (fieldsValue) => {
     try {
-      setRunning(true)
-      setResults(undefined)
       let statements = editor.current?.editor.getValue()
       if (fieldsValue.pattern !== 'custom') {
+        if (
+          NEED_SELECT_TABLE_PATTERN.has(fieldsValue.pattern) &&
+          !fieldsValue.table_name
+        ) {
+          return
+        }
         statements = generateSQL(fieldsValue)
+        if (!statements) {
+          return
+        }
       }
+      setRunning(true)
+      setResults(undefined)
       const resp = await client.getInstance().queryEditorRun({
         max_rows: MAX_DISPLAY_ROWS,
         statements: statements,
@@ -259,7 +268,6 @@ function App() {
                 type="primary"
                 htmlType="submit"
                 icon={<CaretRightOutlined />}
-                onClick={handleRun}
                 loading={isRunning}
               >
                 {t('queryviz.run')}

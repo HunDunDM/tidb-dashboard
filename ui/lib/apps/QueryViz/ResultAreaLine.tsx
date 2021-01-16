@@ -36,6 +36,14 @@ function ResultAreaLine({ results, height }: IResultAreaLineProps) {
     })
 
     return {
+      title: {
+        text: columnNames[1],
+        left: 'center',
+        top: 20,
+        textStyle: {
+          color: '#333',
+        },
+      },
       xAxis: {
         type: 'category',
         data: keys,

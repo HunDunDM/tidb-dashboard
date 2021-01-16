@@ -33,7 +33,6 @@ function ResultCategoryStack({
     }
 
     const columnNames = results.column_names ?? []
-    const stack = columnNames[2]
     const data = results.rows ?? []
     let keys: Array<string> = []
     let categories: Array<string> = []
@@ -57,7 +56,7 @@ function ResultCategoryStack({
     const series = categories.map((category, i) => ({
       name: category,
       type: 'bar',
-      stack: stack,
+      stack: columnNames[2],
       data: matrix[i],
       label: {
         show: true,
@@ -66,6 +65,14 @@ function ResultCategoryStack({
     }))
 
     return {
+      title: {
+        text: columnNames[2],
+        left: 'center',
+        top: 20,
+        textStyle: {
+          color: '#333',
+        },
+      },
       tooltip: {
         trigger: 'axis',
         axisPointer: {

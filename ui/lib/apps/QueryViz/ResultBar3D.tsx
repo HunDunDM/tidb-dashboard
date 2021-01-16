@@ -114,11 +114,9 @@ function ResultBar3D({
               borderWidth: 1,
             },
           },
-
           itemStyle: {
             opacity: 0.4,
           },
-
           emphasis: {
             label: {
               textStyle: {

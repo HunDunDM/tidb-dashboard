@@ -46,7 +46,6 @@ function ResultPie({
       .sort(function (a, b) {
         return a.value - b.value
       })
-
     return {
       title: {
         text: columnNames[1],
@@ -62,8 +61,8 @@ function ResultPie({
       },
       visualMap: {
         show: false,
-        min: 80,
-        max: height,
+        min: 0,
+        max: source[source.length - 1].value,
         inRange: {
           colorLightness: [0, 1],
         },

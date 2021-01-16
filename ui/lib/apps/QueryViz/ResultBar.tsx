@@ -66,7 +66,7 @@ function ResultBar({
         },
       ],
     }
-  }, [results])
+  }, [results, defaultCategory])
 
   return (
     <div className={styles.result}>

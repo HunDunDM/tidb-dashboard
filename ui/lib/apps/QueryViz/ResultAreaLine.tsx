@@ -67,7 +67,7 @@ function ResultAreaLine({
         },
       ],
     }
-  }, [results])
+  }, [results, defaultCategory])
 
   return (
     <div className={styles.result}>

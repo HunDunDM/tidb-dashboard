@@ -14,6 +14,7 @@ import {
 import Editor from './Editor'
 import ResultCategoryStack from './ResultCategoryStack'
 import ResultBar from './ResultBar'
+import ResultAreaLine from './ResultAreaLine'
 
 import styles from './index.module.less'
 import client, { QueryeditorRunResponse } from '@lib/client'
@@ -100,6 +101,9 @@ function App() {
     case 'bar':
       Result = <ResultBar results={results} height={HEIGHT} />
       break
+    case 'area_line':
+      Result = <ResultAreaLine results={results} height={HEIGHT} />
+      break
     default:
       Result = null
   }
@@ -175,7 +179,7 @@ function App() {
                       rules={[{ required: true }]}
                     >
                       <Select style={{ width: 300 }}>
-                        {['bar', 'category_stack'].map((name) => (
+                        {['bar', 'area_line', 'category_stack'].map((name) => (
                           <Select.Option key={name} value={name}>
                             {t('queryviz.echarts.' + name)}
                           </Select.Option>

@@ -10,5 +10,6 @@ queryviz:
     custom: 自定义 SQL
   echarts:
     select: 选择图表
+    area_line: 线状图
     bar: 柱状图
     category_stack: 堆叠柱状图

@@ -6,6 +6,7 @@ import 'echarts/lib/component/legend'
 import 'echarts/lib/component/tooltip'
 import 'echarts/lib/component/title'
 import 'echarts/lib/component/toolbox'
+import 'echarts-gl'
 
 import React, { useMemo } from 'react'
 import ReactEchartsCore from 'echarts-for-react/lib/core'
@@ -46,7 +47,7 @@ function ResultBar3D({
     categories = Array.from(new Set(categories)).sort()
 
     const source = data.map((row) => ({
-      value: [row[0], row[1], row[2]],
+      value: [row[0], row[1] ?? defaultCategory, row[2]],
     }))
 
     return {

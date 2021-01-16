@@ -18,10 +18,15 @@ import { ScrollablePane } from 'office-ui-fabric-react/lib/ScrollablePane'
 
 interface IResultAreaLineProps {
   results?: QueryeditorRunResponse
+  defaultCategory?: string
   height: number
 }
 
-function ResultAreaLine({ results, height }: IResultAreaLineProps) {
+function ResultAreaLine({
+  results,
+  defaultCategory = 'NULL',
+  height,
+}: IResultAreaLineProps) {
   const opt = useMemo(() => {
     if (!results) {
       return null
@@ -29,10 +34,10 @@ function ResultAreaLine({ results, height }: IResultAreaLineProps) {
 
     const columnNames = results.column_names ?? []
     const data = results.rows ?? []
-    const keys = data.map((row) => String(row[0])).sort()
+    const keys = data.map((row) => String(row[0] ?? defaultCategory)).sort()
     const values: Array<number> = []
     data.forEach((row) => {
-      values[keys.indexOf(String(row[0]))] = Number(row[1])
+      values[keys.indexOf(String(row[0] ?? defaultCategory))] = Number(row[1])
     })
 
     return {

@@ -18,10 +18,15 @@ import { ScrollablePane } from 'office-ui-fabric-react/lib/ScrollablePane'
 
 interface IResultPieProps {
   results?: QueryeditorRunResponse
+  defaultCategory?: string
   height: number
 }
 
-function ResultPie({ results, height }: IResultPieProps) {
+function ResultPie({
+  results,
+  defaultCategory = 'NULL',
+  height,
+}: IResultPieProps) {
   const opt = useMemo(() => {
     if (!results) {
       return null
@@ -35,7 +40,7 @@ function ResultPie({ results, height }: IResultPieProps) {
     const data = results.rows ?? []
     const source = data
       .map((row) => ({
-        name: String(row[0]),
+        name: String(row[0] ?? defaultCategory),
         value: Number(row[1]),
       }))
       .sort(function (a, b) {

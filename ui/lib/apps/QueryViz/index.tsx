@@ -277,7 +277,7 @@ function App() {
                 type="primary"
                 htmlType="submit"
                 icon={<CaretRightOutlined />}
-                loading={isRunning}
+                disabled={isRunning}
               >
                 {t('queryviz.run')}
               </Button>

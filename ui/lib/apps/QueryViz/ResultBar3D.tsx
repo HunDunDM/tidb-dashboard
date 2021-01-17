@@ -83,14 +83,17 @@ function ResultBar3D({
         },
       },
       xAxis3D: {
+        name: columnNames[0],
         type: 'category',
         data: keys,
       },
       yAxis3D: {
+        name: columnNames[1],
         type: 'category',
         data: categories,
       },
       zAxis3D: {
+        name: columnNames[2],
         type: 'value',
       },
       grid3D: {
@@ -110,7 +113,6 @@ function ResultBar3D({
           type: 'bar3D',
           data: source,
           shading: 'color',
-
           label: {
             show: false,
             textStyle: {

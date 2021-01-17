@@ -71,7 +71,7 @@ export function generateSQL({
       return (
         'SELECT TABLE_NAME, TYPE, SUM(FLOW_BYTES) SUM_FLOW_BYTES FROM INFORMATION_SCHEMA.TIDB_HOT_REGIONS WHERE ' +
         whereSum +
-        " AND MAX_HOT_DEGREE > 2 AND TABLE_NAME != 'mysql' GROUP BY TABLE_NAME, TYPE ORDER BY SUM_FLOW_BYTES DESC;"
+        " AND MAX_HOT_DEGREE > 2 AND DB_NAME != 'mysql' GROUP BY TABLE_NAME, TYPE ORDER BY SUM_FLOW_BYTES DESC;"
       )
     default:
       return ''

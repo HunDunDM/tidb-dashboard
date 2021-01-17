@@ -41,14 +41,6 @@ function ResultBar({
     })
 
     return {
-      title: {
-        text: columnNames[1],
-        left: 'center',
-        top: 20,
-        textStyle: {
-          color: '#333',
-        },
-      },
       tooltip: {
         trigger: 'item',
       },

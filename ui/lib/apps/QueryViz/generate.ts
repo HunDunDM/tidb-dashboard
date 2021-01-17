@@ -11,14 +11,14 @@ export function generateSQL({
     whereSum += ' AND (0 = 1'
     table_names.forEach((table_name) => {
       const parts = table_name.split('.')
-      let where = "OR table_name = '" + table_name + "'"
+      let where = 'OR table_name = `' + table_name + '`'
       if (parts.length === 2) {
         where =
-          " OR (db_name = '" +
+          ' OR (db_name = `' +
           parts[0] +
-          "' AND table_name = '" +
+          '` AND table_name = `' +
           parts[1] +
-          "')"
+          '`)'
       }
       whereSum += where
     })
@@ -74,7 +74,11 @@ export function generateSQL({
         " AND MAX_HOT_DEGREE > 2 AND DB_NAME != 'mysql' GROUP BY TABLE_NAME, TYPE ORDER BY SUM_FLOW_BYTES DESC;"
       )
     case 'table_sst_level_count':
-      return 'SELECT STORE_ID, LEVEL, count(sst_name) SST_COUNT FROM INFORMATION_SCHEMA.TABLE_SST GROUP BY STORE_ID, LEVEL;'
+      return (
+        'SELECT STORE_ID, LEVEL, count(sst_name) SST_COUNT FROM INFORMATION_SCHEMA.TABLE_SST WHERE' +
+        whereSum +
+        " AND DB_NAME != 'mysql' GROUP BY STORE_ID, LEVEL;"
+      )
     default:
       return ''
   }

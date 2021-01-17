@@ -55,14 +55,6 @@ function ResultBar3D({
     categories = Array.from(new Set(categories)).sort()
 
     return {
-      title: {
-        text: columnNames[2],
-        left: 'center',
-        top: 20,
-        textStyle: {
-          color: '#333',
-        },
-      },
       tooltip: {},
       visualMap: {
         max: maxValue,

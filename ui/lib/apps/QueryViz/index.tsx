@@ -1,13 +1,7 @@
 import React, { useState, useCallback, useRef, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import cx from 'classnames'
-import {
-  Root,
-  Card,
-  TimeRange,
-  TimeRangeSelector,
-  MultiSelect,
-} from '@lib/components'
+import { Root, Card, TimeRangeSelector, MultiSelect } from '@lib/components'
 import Split from 'react-split'
 import { Button, Typography, Form, Select } from 'antd'
 import {
@@ -28,20 +22,17 @@ import styles from './index.module.less'
 import client, { QueryeditorRunResponse } from '@lib/client'
 import ReactAce from 'react-ace/lib/ace'
 import { getValueFormat } from '@baurine/grafana-value-formats'
-import { generateSQL, DEFAULT_CATEGORY, DEFAULT_ECHARTS } from './generate'
+import {
+  generateSQL,
+  DEFAULT_CATEGORY,
+  DEFAULT_ECHARTS,
+  NEED_SELECT_TABLE_PATTERN,
+  NEED_SELECT_TIME_PATTERN,
+} from './generate'
 
 const MAX_DISPLAY_ROWS = 10000
 
 const HEIGHT = 480
-
-const NEED_SELECT_TABLE_PATTERN = new Set([
-  'table_region_peer_count',
-  'table_region_leader_count',
-  'table_region_peer_balance',
-  'table_region_leader_balance',
-])
-
-const NEED_SELECT_TIME_PATTERN = new Set(['table_slow_log_count'])
 
 const COLUMN_LENGTH = {
   pie: 2,
@@ -207,6 +198,7 @@ function App() {
                   'table_region_leader_count',
                   'table_region_peer_balance',
                   'table_region_leader_balance',
+                  'table_slow_log_count',
                   'custom',
                 ].map((value) => (
                   <Select.Option value={value} key={value}>
@@ -241,13 +233,26 @@ function App() {
             >
               {({ getFieldValue }) => {
                 return (
+                  NEED_SELECT_TIME_PATTERN.has(getFieldValue('pattern')) && (
+                    <Form.Item name="time_range">
+                      <TimeRangeSelector />
+                    </Form.Item>
+                  )
+                )
+              }}
+            </Form.Item>
+            <Form.Item
+              noStyle
+              shouldUpdate={(prev, cur) => prev.pattern !== cur.pattern}
+            >
+              {({ getFieldValue }) => {
+                return (
                   getFieldValue('pattern') === 'custom' && (
-                    <Form.Item
-                      name="echarts"
-                      label={t('queryviz.echarts.select')}
-                      rules={[{ required: true }]}
-                    >
-                      <Select style={{ width: 240 }}>
+                    <Form.Item name="echarts" rules={[{ required: true }]}>
+                      <Select
+                        style={{ width: 240 }}
+                        placeholder={t('queryviz.echarts.select')}
+                      >
                         {[
                           'pie',
                           'bar',

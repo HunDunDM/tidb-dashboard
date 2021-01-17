@@ -1,9 +1,13 @@
+import { calcTimeRange } from '@lib/components'
+import moment from 'moment'
+
 export function generateSQL({
   pattern = 'custom',
   table_names = new Array<string>(),
+  time_range,
 }): string {
   let whereSum = '1 = 1'
-  if (table_names.length > 0) {
+  if (table_names.length > 0 && NEED_SELECT_TABLE_PATTERN.has(pattern)) {
     whereSum += ' AND (0 = 1'
     table_names.forEach((table_name) => {
       const parts = table_name.split('.')
@@ -19,6 +23,17 @@ export function generateSQL({
       whereSum += where
     })
     whereSum += ')'
+  }
+  if (NEED_SELECT_TIME_PATTERN.has(pattern)) {
+    const [startTime, endTime] = calcTimeRange(time_range)
+    const startTimeStr = moment(new Date(startTime * 1000)).format(
+      "'YYYY-MM-DD HH'"
+    )
+    const endTimeStr = moment(new Date(endTime * 1000)).format(
+      "'YYYY-MM-DD HH'"
+    )
+    whereSum +=
+      ' AND (TIME >= ' + startTimeStr + ' AND TIME <= ' + endTimeStr + ')'
   }
   switch (pattern) {
     case 'table_region_peer_count':
@@ -45,6 +60,13 @@ export function generateSQL({
         whereSum +
         ' AND p.IS_LEADER = 1 GROUP BY p.STORE_ID ORDER BY LEADER_COUNT DESC;'
       )
+    case 'table_slow_log_count':
+      return (
+        "SELECT DATE_FORMAT(time, '%Y-%m-%d %H') TIME_HOUR, COUNT(1) LOG_COUNT FROM INFORMATION_SCHEMA.CLUSTER_LOG WHERE " +
+        "MESSAGE LIKE '%' AND " +
+        whereSum +
+        ' GROUP BY TIME_HOUR;'
+      )
     default:
       return ''
   }
@@ -62,3 +84,13 @@ export const DEFAULT_ECHARTS = {
   table_region_leader_balance: 'pie',
   table_slow_log_count: 'area_line',
 }
+
+export const NEED_SELECT_TABLE_PATTERN = new Set([
+  'table_region_peer_count',
+  'table_region_leader_count',
+  'table_region_peer_balance',
+  'table_region_leader_balance',
+  'table_slow_log_count',
+])
+
+export const NEED_SELECT_TIME_PATTERN = new Set(['table_slow_log_count'])

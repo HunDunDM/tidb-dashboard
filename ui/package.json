@@ -27,6 +27,7 @@
     "i18next-browser-languagedetector": "^5.0.0",
     "lodash": "^4.17.19",
     "moize": "^5.4.7",
+    "moment": "^2.29.1",
     "nprogress": "^0.2.0",
     "office-ui-fabric-react": "^7.123.10",
     "rc-animate": "^3.1.0",

@@ -67,6 +67,12 @@ export function generateSQL({
         whereSum +
         ' GROUP BY TIME_HOUR;'
       )
+    case 'table_hot_region_bytes':
+      return (
+        'SELECT TABLE_NAME, TYPE, SUM(FLOW_BYTES) SUM_FLOW_BYTES FROM INFORMATION_SCHEMA.TIDB_HOT_REGIONS WHERE ' +
+        whereSum +
+        " AND MAX_HOT_DEGREE > 2 AND TABLE_NAME != 'mysql' GROUP BY TABLE_NAME, TYPE ORDER BY SUM_FLOW_BYTES DESC;"
+      )
     default:
       return ''
   }
@@ -83,6 +89,7 @@ export const DEFAULT_ECHARTS = {
   table_region_peer_balance: 'pie',
   table_region_leader_balance: 'pie',
   table_slow_log_count: 'area_line',
+  table_hot_region_bytes: 'category_stack',
 }
 
 export const NEED_SELECT_TABLE_PATTERN = new Set([
@@ -91,6 +98,7 @@ export const NEED_SELECT_TABLE_PATTERN = new Set([
   'table_region_peer_balance',
   'table_region_leader_balance',
   'table_slow_log_count',
+  'table_hot_region_bytes',
 ])
 
 export const NEED_SELECT_TIME_PATTERN = new Set(['table_slow_log_count'])

@@ -13,6 +13,7 @@ queryviz:
     table_region_peer_count: Region Peer 分布
     table_region_leader_count: Region Leader 分布
     table_slow_log_count: 慢日志的时间分布
+    table_hot_region_bytes: 热点 Region 分布
     custom: 自定义 SQL
   echarts:
     select: 选择图表

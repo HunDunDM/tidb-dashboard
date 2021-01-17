@@ -198,6 +198,7 @@ function App() {
                   'table_region_leader_count',
                   'table_region_peer_balance',
                   'table_region_leader_balance',
+                  'table_hot_region_bytes',
                   'table_slow_log_count',
                   'custom',
                 ].map((value) => (

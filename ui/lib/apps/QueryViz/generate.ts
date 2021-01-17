@@ -73,6 +73,8 @@ export function generateSQL({
         whereSum +
         " AND MAX_HOT_DEGREE > 2 AND DB_NAME != 'mysql' GROUP BY TABLE_NAME, TYPE ORDER BY SUM_FLOW_BYTES DESC;"
       )
+    case 'table_sst_level_count':
+      return 'SELECT STORE_ID, LEVEL, count(sst_name) SST_COUNT FROM INFORMATION_SCHEMA.TABLE_SST GROUP BY STORE_ID, LEVEL;'
     default:
       return ''
   }
@@ -90,6 +92,7 @@ export const DEFAULT_ECHARTS = {
   table_region_leader_balance: 'pie',
   table_slow_log_count: 'area_line',
   table_hot_region_bytes: 'category_stack',
+  table_sst_level_count: 'bar3d',
 }
 
 export const NEED_SELECT_TABLE_PATTERN = new Set([
@@ -98,6 +101,7 @@ export const NEED_SELECT_TABLE_PATTERN = new Set([
   'table_region_peer_balance',
   'table_region_leader_balance',
   'table_hot_region_bytes',
+  'table_sst_level_count',
 ])
 
 export const NEED_SELECT_TIME_PATTERN = new Set(['table_slow_log_count'])

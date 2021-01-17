@@ -200,6 +200,7 @@ function App() {
                   'table_region_leader_balance',
                   'table_hot_region_bytes',
                   'table_slow_log_count',
+                  'table_sst_level_count',
                   'custom',
                 ].map((value) => (
                   <Select.Option value={value} key={value}>

@@ -59,8 +59,7 @@ function ResultCategoryStack({
       stack: columnNames[2],
       data: matrix[i],
       label: {
-        show: true,
-        position: 'insideRight',
+        show: false,
       },
     }))
 

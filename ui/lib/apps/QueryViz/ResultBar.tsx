@@ -57,9 +57,11 @@ function ResultBar({
         position: 'outsideRight',
       },
       xAxis: {
+        name: columnNames[0],
         type: 'value',
       },
       yAxis: {
+        name: columnNames[1],
         type: 'category',
         data: keys,
       },

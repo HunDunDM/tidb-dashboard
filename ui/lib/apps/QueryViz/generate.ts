@@ -11,12 +11,12 @@ export function generateSQL({
     whereSum += ' AND (0 = 1'
     table_names.forEach((table_name) => {
       const parts = table_name.split('.')
-      let where = "OR s.table_name = '" + table_name + "'"
+      let where = "OR table_name = '" + table_name + "'"
       if (parts.length === 2) {
         where =
-          " OR (s.db_name = '" +
+          " OR (db_name = '" +
           parts[0] +
-          "' AND s.table_name = '" +
+          "' AND table_name = '" +
           parts[1] +
           "')"
       }

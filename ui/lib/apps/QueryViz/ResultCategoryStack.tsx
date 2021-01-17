@@ -78,15 +78,17 @@ function ResultCategoryStack({
         },
       },
       grid: {
-        left: '3%',
-        right: '4%',
+        left: '10%',
+        right: '10%',
         bottom: '3%',
         containLabel: true,
       },
       xAxis: {
+        name: columnNames[0],
         type: 'value',
       },
       yAxis: {
+        name: columnNames[2],
         type: 'category',
         data: keys,
       },

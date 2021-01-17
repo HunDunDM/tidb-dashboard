@@ -52,6 +52,10 @@ function ResultBar({
       tooltip: {
         trigger: 'item',
       },
+      label: {
+        show: true,
+        position: 'outsideRight',
+      },
       xAxis: {
         type: 'value',
       },

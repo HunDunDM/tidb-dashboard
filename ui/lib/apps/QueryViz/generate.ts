@@ -86,7 +86,7 @@ export const DEFAULT_CATEGORY = {
 export const DEFAULT_ECHARTS = {
   table_region_peer_count: 'bar3d',
   table_region_leader_count: 'category_stack',
-  table_region_peer_balance: 'pie',
+  table_region_peer_balance: 'bar',
   table_region_leader_balance: 'pie',
   table_slow_log_count: 'area_line',
   table_hot_region_bytes: 'category_stack',

@@ -62,7 +62,6 @@ function ResultCategoryStack({
         show: false,
       },
     }))
-
     return {
       title: {
         text: columnNames[2],

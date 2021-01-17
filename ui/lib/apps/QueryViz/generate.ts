@@ -75,7 +75,7 @@ export function generateSQL({
       )
     case 'table_sst_level_count':
       return (
-        'SELECT STORE_ID, LEVEL, count(sst_name) SST_COUNT FROM INFORMATION_SCHEMA.TABLE_SST WHERE' +
+        'SELECT STORE_ID, LEVEL, COUNT(SST_NAME) SST_COUNT FROM INFORMATION_SCHEMA.TABLE_SST WHERE ' +
         whereSum +
         " AND DB_NAME != 'mysql' GROUP BY STORE_ID, LEVEL;"
       )

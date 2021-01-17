@@ -97,7 +97,6 @@ export const NEED_SELECT_TABLE_PATTERN = new Set([
   'table_region_leader_count',
   'table_region_peer_balance',
   'table_region_leader_balance',
-  'table_slow_log_count',
   'table_hot_region_bytes',
 ])
 

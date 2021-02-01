@@ -3,12 +3,18 @@ queryviz:
   run: Run
   table:
     select: Select Table
+    placeholder: All tables
+    selected: '{{ n }} tables'
+    columnTitle: DB.Table
   pattern:
     select: Select Pattern
     table_region_peer_balance: The balance of Region peer
     table_region_leader_balance: The balance of Region leader
     table_region_peer_count: The distribution of Region peer
     table_region_leader_count: The distribution of Region leader
+    table_slow_log_count: The distribution of slow log
+    table_hot_region_bytes: The distribution of hot region
+    table_sst_level_count: The distribution of SST Level
     custom: Custom SQL
   echarts:
     select: Select Chart
